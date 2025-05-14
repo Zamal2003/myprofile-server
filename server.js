@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const cors = require("cors");
 const nodemailer = require("nodemailer");
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
@@ -10,36 +10,18 @@ const PORT = 5000;
 // Middleware
 app.use(bodyParser.json());
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://myprofile-lemon-seven.vercel.app", // ✅ your current frontend
-  // Add others if needed
-];
+
+
+
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["POST"],
-    credentials: true,
+    origin: "https://myprofile-lemon-seven.vercel.app",// Replace with your frontend URL
+    methods: ["POST"], // Allow only POST requests
+    credentials:true,
     allowedHeaders: ["Content-Type"],
   })
 );
-
-
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173",// Replace with your frontend URL
-//     methods: ["POST"], // Allow only POST requests
-//     credentials:true,
-//     allowedHeaders: ["Content-Type"],
-//   })
-// );
 
 // Email Configuration
 const transporter = nodemailer.createTransport({
