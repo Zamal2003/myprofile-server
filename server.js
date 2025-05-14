@@ -12,14 +12,13 @@ app.use(bodyParser.json());
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://myprofile-lemon-seven.vercel.app", // your actual deployed frontend
-  "https://portfolio-main-eight-delta.vercel.app", // optional: older frontend
+  "https://myprofile-lemon-seven.vercel.app", // ✅ your current frontend
+  // Add others if needed
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl)
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
