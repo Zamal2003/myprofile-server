@@ -11,17 +11,37 @@ const PORT = 5000;
 app.use(bodyParser.json());
 
 
-
-
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://myprofile-lemon-seven.vercel.app", // your frontend on Vercel
+];
 
 app.use(
   cors({
-    origin: "https://myprofile-lemon-seven.vercel.app",// Replace with your frontend URL
-    methods: ["POST"], // Allow only POST requests
-    credentials:true,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["POST"],
+    credentials: true,
     allowedHeaders: ["Content-Type"],
   })
 );
+
+
+
+
+// app.use(
+//   cors({
+//     origin: "https://myprofile-lemon-seven.vercel.app",// Replace with your frontend URL
+//     methods: ["POST"], // Allow only POST requests
+//     credentials:true,
+//     allowedHeaders: ["Content-Type"],
+//   })
+// );
 
 // Email Configuration
 const transporter = nodemailer.createTransport({
